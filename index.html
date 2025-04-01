@@ -11,25 +11,30 @@
 </head>
 <body>
     <h1 id="Main_Header">TicTacToe</h1>
-    <div class="board">
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="squares"></div>
-        <div class="pregame">
-            <h1>Select:</h1>
-            <div class="x_o">
-                <h2 class="pregameSelect">X</h2>
-                <h2 class="pregameSelect">O</h2>
+    <div class="board_container">
+        <div class="board">
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="squares"></div>
+            <div class="pregame">
+                <h1>Select:</h1>
+                <div class="x_o">
+                    <h2 class="pregameSelect">X</h2>
+                    <h2 class="pregameSelect">O</h2>
+                </div>
             </div>
+            <div class="gameover_board"></div>
         </div>
+        <button id="reset_button">Reset</button>
     </div>
+    
 
-    <script src="./js/index.js"></script>
+    <script type="module" src="./js/index.js"></script>
 </body>
 </html>

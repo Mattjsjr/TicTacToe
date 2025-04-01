@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Tree",
+            "url": "http://localhost:5500",
+            "webRoot": "${workspaceFolder}/index.js"
+        }
+    ]
+}
+
+
+/*  {
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Tree.js",
+      "program": "${workspaceFolder}/js/tree.js",  // Make sure the path is correct
+      "skipFiles": ["<node_internals>/**"],  // Skips Node.js internals
+      "console": "integratedTerminal"  // Ensures the terminal is used for output
+    }
+  ]
+} */
