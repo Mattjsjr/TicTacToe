@@ -1,25 +1,31 @@
 class Node {
-    constructor(value) {
+    constructor(value, turn) {
         this.value = value;
-        this.children = [];  
+        this.children = [];
         this.winVal = null;
+        this.turn = turn;
     }
 
     getValue() {
         return this.value;
     }
 
-    getChildren(){
+    getChildren() {
         return this.children;
     }
 
-    getWinVal(){
+    getWinVal() {
         return this.winVal;
+    }
+
+    getTurn(){
+        return this.turn;
     }
 
     addChild(node) {
         this.children.push(node);
     }
+
 }
 
 class Tree {
@@ -29,34 +35,36 @@ class Tree {
     }
 
     switchTurn() {
-        this.turn = this.turn === 'O' ? 'X':'O';
+        this.turn = this.turn === 'O' ? 'X' : 'O';
     }
 
-    gameOver(positions){
+    gameOver(positions) {
 
         const winPositions = [
-            [0,1,2],
-            [3,4,5],
-            [6,7,8],
-            [0,3,6],
-            [1,4,7],
-            [2,5,8],
-            [0,4,8],
-            [6,4,2]
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [6, 4, 2]
         ]
 
         let tie = true;
 
-        for(let pattern of winPositions){
-            let [a,b,c] = pattern;
+        for (let pattern of winPositions) {
+            let [a, b, c] = pattern;
 
-            if(positions[a] === "" || positions[b] === "" || positions[c] === ""){
+            if (positions[a] === "" || positions[b] === "" || positions[c] === "") {
                 tie = false;
             }
 
-            if(positions[a] != "" && positions[a] === positions[b] && positions[b] == positions[c]){
+            if (positions[a] != "" && positions[a] === positions[b] && positions[b] == positions[c]) {
                 if (positions[a] === 'O')
                     return -1;
+                else
+                    return 1
             }
         }
 
@@ -67,20 +75,22 @@ class Tree {
     }
 
     createTree(lastNode = this.root) {
-        this.switchTurn();
 
         for (let i = 0; i < 9; i++) {
-            let currentBoard = lastNode.getValue().slice(); 
+            let currentBoard = lastNode.getValue().slice();
 
-            if (currentBoard[i] !== "") continue;
+            if (currentBoard[i] !== ""){
+                continue;
+            }
 
-            currentBoard[i] = this.turn;
+            currentBoard[i] = lastNode.getTurn();
             let newNode = new Node(currentBoard);
             newNode.winVal = this.gameOver(currentBoard);
+            newNode.turn = lastNode.getTurn() === 'X' ? 'O':'X';
             lastNode.addChild(newNode);
             this.createTree(newNode);
         }
     }
 }
 
-export default {Tree, Node};
+export default { Tree, Node };

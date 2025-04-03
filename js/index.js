@@ -1,17 +1,23 @@
 import TreeModule from "./tree.js";
 
-document.addEventListener("DOMContentLoaded", () =>{
+document.addEventListener("DOMContentLoaded", () => {
 
-    function reset(squares){
-        squares.forEach(square =>{
+    function reset(squares) {
+        squares.forEach(square => {
             square.textContent = "";
         })
     }
 
-    function squaresToList(squares){
+    function squaresToList(squares) {
         let positions = [];
         squares.forEach(square => {
-            positions.push(square.textContent);
+            if (square.textContent === undefined){
+                positions.push("")
+            }
+            else{
+                positions.push(square.textContent);
+            }
+            
         })
         return positions;
     }
@@ -26,13 +32,14 @@ document.addEventListener("DOMContentLoaded", () =>{
     let selected;
     let turn = 'X';
 
-    let root = new TreeModule.Node(Array(9).fill());
+    let root = new TreeModule.Node(['','','','','','','','',''], 'X');
     let tree = new TreeModule.Tree(root);
+    tree.createTree()
     let currentNode = root;
 
     // User chooses X or O
     selectors.forEach(selector => {
-        selector.addEventListener("click", (event) =>{
+        selector.addEventListener("click", (event) => {
             selected = event.target.textContent;
             console.log(selected);
             board.style.display = "none";
@@ -42,20 +49,30 @@ document.addEventListener("DOMContentLoaded", () =>{
     // User chooses a square
     squares.forEach(square => {
         square.addEventListener("click", () => {
-            square.textContent = selected
+            square.textContent = turn;
+            turn = turn === 'X' ? 'O' : 'X';
 
-            let currentBoard = squaresToList(squares)
-            for(let i = 0; i < 9; i++){
-                if(currentBoard == currentNode.getChildren()[i]){
+            let currentBoard = squaresToList(squares);
+            for (let i = 0; i < 9; i++) {
+                if (JSON.stringify(currentBoard) == JSON.stringify(currentNode.getChildren()[i].getValue())) {
                     currentNode = currentNode.getChildren()[i];
                     break;
                 }
             }
 
-            /* if (gameOver(squares)){
+            if (currentNode.getWinVal() == 1){
                 gameOverBoard.style.display = "block";
-                mainHeader.textContent = "Game Over";
-            } */
+                mainHeader.textContent = "X Wins";
+            }
+            else if (currentNode.getWinVal() == -1){
+                gameOverBoard.style.display = "block";
+                mainHeader.textContent = "O Wins";
+            }
+            else if (currentNode.getWinVal() == 0){
+                gameOverBoard.style.display = "block";
+                mainHeader.textContent = "Tie";
+            }
+
         })
     });
 
