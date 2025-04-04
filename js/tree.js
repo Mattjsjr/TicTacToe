@@ -4,6 +4,7 @@ class Node {
         this.children = [];
         this.winVal = null;
         this.turn = turn;
+        this.minmax = null;
     }
 
     getValue() {
@@ -31,6 +32,7 @@ class Node {
 class Tree {
     constructor(root) {
         this.root = root;
+        this.root.minmax = 1;
         this.turn = 'O';
     }
 
@@ -87,9 +89,54 @@ class Tree {
             let newNode = new Node(currentBoard);
             newNode.winVal = this.gameOver(currentBoard);
             newNode.turn = lastNode.getTurn() === 'X' ? 'O':'X';
+            if (lastNode.getTurn() === 'X'){
+                newNode.turn = 'O';
+                newNode.minmax = 0;
+            } else {
+                newNode.turn = 'X';
+                newNode.minmax = 1;
+            }
             lastNode.addChild(newNode);
             this.createTree(newNode);
         }
+    }
+
+    assignScore(currentNode = this.root){
+
+        if(currentNode.minmax == 1){
+        // Max
+            let maxiumum = 0;
+            let maximumNode;
+
+            if(currentNode.getChildren().length === 0){
+                for(nodes in currentNode.getChildren()){
+                
+                }
+            } else {
+            }
+            
+
+        } else{
+        // Min
+
+        }
+
+        /* let maximum = 0;
+        let minimum = 0; 
+        let maximumNode;
+        let minimumNode;
+
+        for(node in currentNode.getChildren){
+            if (node.getWinVal() != null && node.getWinVal >= maximum){
+                maximum = maximum;
+                maximumNode = JSON.parse(JSON.stringify(node));
+            }
+
+            if (node.getWinVal() != null && node.getWinVal <= minimum){
+                minimum = minimum;
+                minimumNode = JSON.parse(JSON.stringify(node));
+            }
+        } */
     }
 }
 

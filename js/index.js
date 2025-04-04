@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectors.forEach(selector => {
         selector.addEventListener("click", (event) => {
             selected = event.target.textContent;
-            console.log(selected);
             board.style.display = "none";
         });
     });
@@ -82,6 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
         gameOverBoard.style.display = "none";
         mainHeader.textContent = "Tic Tac Toe";
         board.style.display = "flex";
+        root = tree.root;
+        currentNode = root;
+        turn = 'X';
     });
 
 });

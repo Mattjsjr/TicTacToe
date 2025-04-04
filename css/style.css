@@ -21,9 +21,10 @@ body{
 
 .board_container{
     display: flex;
-    width: 80vh;
+    width: 40vw;
     justify-content: center;
     position: relative;
+    width: 90vh;
 }
 
 .board{
