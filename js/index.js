@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let root = new TreeModule.Node(['','','','','','','','',''], 'X');
     let tree = new TreeModule.Tree(root);
     tree.createTree()
+    tree.assignScore()
     let currentNode = root;
 
     // User chooses X or O

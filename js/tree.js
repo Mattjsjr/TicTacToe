@@ -97,47 +97,44 @@ class Tree {
                 newNode.minmax = 1;
             }
             lastNode.addChild(newNode);
-            this.createTree(newNode);
+            if (newNode.winVal == null){
+                this.createTree(newNode);
+            }
         }
     }
 
     assignScore(currentNode = this.root){
 
-        if(currentNode.minmax == 1){
-        // Max
-            let maxiumum = 0;
-            let maximumNode;
+        let maximum;
+        let minimum; 
 
-            if(currentNode.getChildren().length === 0){
-                for(nodes in currentNode.getChildren()){
-                
-                }
-            } else {
+        for(let node of currentNode.getChildren()){
+
+            this.assignScore(node);
+
+            if (node.getWinVal() >= maximum){
+                maximum = node.getWinVal();
             }
-            
 
-        } else{
-        // Min
-
+            if (node.getWinVal() <= minimum){
+                minimum = node.getWinVal();
+            }
         }
 
-        /* let maximum = 0;
-        let minimum = 0; 
-        let maximumNode;
-        let minimumNode;
-
-        for(node in currentNode.getChildren){
-            if (node.getWinVal() != null && node.getWinVal >= maximum){
-                maximum = maximum;
-                maximumNode = JSON.parse(JSON.stringify(node));
-            }
-
-            if (node.getWinVal() != null && node.getWinVal <= minimum){
-                minimum = minimum;
-                minimumNode = JSON.parse(JSON.stringify(node));
-            }
-        } */
+        if (currentNode.getWinVal() == null){
+            if (currentNode.minmax === 1){
+                currentNode.winVal = maximum;
+            } else {
+                currentNode.winVal = minimum;
+            } 
+        }
+        
     }
 }
 
+let root = new Node(['','','','','','','','',''], 'X');
+let tree = new Tree(root);
+tree.createTree()
+tree.assignScore()
+console.log("");
 export default { Tree, Node };
