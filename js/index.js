@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             selected = event.target.textContent;
             board.style.display = "none";
             computerStarts = selected === 'X' ? false : true;
+            turn = computerStarts ? 'O' : 'X';
             if (computerStarts){
                 currentNode = gameDecide(currentNode, gameOverBoard);
             }
