@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             gameOverBoard.style.display = "block";
             mainHeader.textContent = "Tie";
         }
+        gameOverBoard.style.display = "none";
     }
 
     function gameDecide(currentNode, gameOverBoard){
@@ -101,14 +102,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
                 }
             }         
-
             checkGameOver(currentNode, gameOverBoard, mainHeader);
-
+            gameOverBoard.style.display = "block";
             if (currentNode.getGameOverVal() === null){
-                currentNode = gameDecide(currentNode, gameOverBoard);
+                setTimeout(() => {
+                    currentNode = gameDecide(currentNode, gameOverBoard);
+                    checkGameOver(currentNode, gameOverBoard, mainHeader);
+                }, 300);
             }
-
-            checkGameOver(currentNode, gameOverBoard, mainHeader);
 
         })
     });
