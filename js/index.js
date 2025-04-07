@@ -22,6 +22,43 @@ document.addEventListener("DOMContentLoaded", () => {
         return positions;
     }
 
+    function checkGameOver(currentNode, gameOverBoard, mainHeader){
+        if (currentNode.getGameOverVal() == 1){
+            gameOverBoard.style.display = "block";
+            mainHeader.textContent = "X Wins";
+        }
+        else if (currentNode.getGameOverVal() == -1){
+            gameOverBoard.style.display = "block";
+            mainHeader.textContent = "O Wins";
+        }
+        else if (currentNode.getGameOverVal() == 0){
+            gameOverBoard.style.display = "block";
+            mainHeader.textContent = "Tie";
+        }
+    }
+
+    function gameDecide(currentNode, gameOverBoard){
+        let nextNode;
+        for(let child of currentNode.getChildren()){
+            if (currentNode.getWinVal() === child.getWinVal()){
+                nextNode = child;
+                break
+            } 
+        }
+
+        gameOverBoard.style.display = "block";
+        let index = 0;
+        squares.forEach(square => {
+            if(square.textContent != nextNode.getValue()[index]){
+                square.textContent = nextNode.getValue()[index];
+            }
+            index++;
+        })
+
+        gameOverBoard.style.display = "none";
+        return nextNode;
+    }
+
     const selectors = document.querySelectorAll('.pregameSelect');
     const board = document.querySelector('.pregame');
     const squares = document.querySelectorAll('.squares');
@@ -31,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selected;
     let turn = 'X';
+    let computerStarts;
 
     let root = new TreeModule.Node(['','','','','','','','',''], 'X');
     let tree = new TreeModule.Tree(root);
@@ -43,6 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
         selector.addEventListener("click", (event) => {
             selected = event.target.textContent;
             board.style.display = "none";
+            computerStarts = selected === 'X' ? false : true;
+            if (computerStarts){
+                currentNode = gameDecide(currentNode, gameOverBoard);
+            }
         });
     });
 
@@ -50,28 +92,22 @@ document.addEventListener("DOMContentLoaded", () => {
     squares.forEach(square => {
         square.addEventListener("click", () => {
             square.textContent = turn;
-            turn = turn === 'X' ? 'O' : 'X';
 
             let currentBoard = squaresToList(squares);
-            for (let i = 0; i < 9; i++) {
-                if (JSON.stringify(currentBoard) == JSON.stringify(currentNode.getChildren()[i].getValue())) {
-                    currentNode = currentNode.getChildren()[i];
+            for (let child of currentNode.getChildren()) {
+                if (JSON.stringify(currentBoard) == JSON.stringify(child.getValue())) {
+                    currentNode = child;
                     break;
                 }
+            }         
+
+            checkGameOver(currentNode, gameOverBoard, mainHeader);
+
+            if (currentNode.getGameOverVal() === null){
+                currentNode = gameDecide(currentNode, gameOverBoard);
             }
 
-            if (currentNode.getWinVal() == 1){
-                gameOverBoard.style.display = "block";
-                mainHeader.textContent = "X Wins";
-            }
-            else if (currentNode.getWinVal() == -1){
-                gameOverBoard.style.display = "block";
-                mainHeader.textContent = "O Wins";
-            }
-            else if (currentNode.getWinVal() == 0){
-                gameOverBoard.style.display = "block";
-                mainHeader.textContent = "Tie";
-            }
+            checkGameOver(currentNode, gameOverBoard, mainHeader);
 
         })
     });

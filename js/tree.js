@@ -5,6 +5,7 @@ class Node {
         this.winVal = null;
         this.turn = turn;
         this.minmax = null;
+        this.gameOverVal = null;
     }
 
     getValue() {
@@ -21,6 +22,10 @@ class Node {
 
     getTurn(){
         return this.turn;
+    }
+
+    getGameOverVal() {
+        return this.gameOverVal;
     }
 
     addChild(node) {
@@ -88,6 +93,7 @@ class Tree {
             currentBoard[i] = lastNode.getTurn();
             let newNode = new Node(currentBoard);
             newNode.winVal = this.gameOver(currentBoard);
+            newNode.gameOverVal = newNode.winVal;
             newNode.turn = lastNode.getTurn() === 'X' ? 'O':'X';
             if (lastNode.getTurn() === 'X'){
                 newNode.turn = 'O';
@@ -105,18 +111,18 @@ class Tree {
 
     assignScore(currentNode = this.root){
 
-        let maximum;
-        let minimum; 
+        let maximum = -2;
+        let minimum = 2; 
 
         for(let node of currentNode.getChildren()){
 
             this.assignScore(node);
 
-            if (node.getWinVal() >= maximum){
+            if (node.getWinVal() > maximum){
                 maximum = node.getWinVal();
             }
 
-            if (node.getWinVal() <= minimum){
+            if (node.getWinVal() < minimum){
                 minimum = node.getWinVal();
             }
         }
@@ -132,9 +138,9 @@ class Tree {
     }
 }
 
-let root = new Node(['','','','','','','','',''], 'X');
+/* let root = new Node(['','','','','','','','',''], 'X');
 let tree = new Tree(root);
 tree.createTree()
 tree.assignScore()
-console.log("");
+console.log(""); */
 export default { Tree, Node };
