@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function reset(squares) {
         squares.forEach(square => {
             square.textContent = "";
+            square.classList.remove("clicked");
         })
     }
 
@@ -52,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         squares.forEach(square => {
             if(square.textContent != nextNode.getValue()[index]){
                 square.textContent = nextNode.getValue()[index];
+                square.classList.add("clicked");
             }
             index++;
         })
@@ -93,7 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // User chooses a square
     squares.forEach(square => {
         square.addEventListener("click", () => {
+
+            if (square.classList.contains("clicked")){
+                return;
+            };
+
             square.textContent = turn;
+            square.classList.add("clicked");
 
             let currentBoard = squaresToList(squares);
             for (let child of currentNode.getChildren()) {
@@ -110,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     checkGameOver(currentNode, gameOverBoard, mainHeader);
                 }, 300);
             }
-
         })
     });
 
