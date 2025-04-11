@@ -20,9 +20,6 @@ body{
 }
 
 .board_container{
-    display: flex;
-    width: 40vw;
-    justify-content: center;
     position: relative;
     width: 90vh;
 }
@@ -38,6 +35,8 @@ body{
     gap: 3%;
     padding: .7rem;
     border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
 }
 
@@ -96,9 +95,10 @@ body{
 
 #reset_button{
     position: absolute;
-    right: 20px;
+    top: 0px;
+    right: -60px;
     background: white;
-    padding: .5rem;
+    padding: .4rem;
     font-size: 1rem;
     border: 3px solid black;
     border-radius: 10px;
