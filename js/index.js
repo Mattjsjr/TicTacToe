@@ -36,7 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
             gameOverBoard.style.display = "block";
             mainHeader.textContent = "Tie";
         }
-        gameOverBoard.style.display = "none";
+        else{
+            gameOverBoard.style.display = "none";
+        }
+        
     }
 
     function gameDecide(currentNode, gameOverBoard){
@@ -100,18 +103,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             };
 
+            // Adds user char to square clicked and makes it unavailable to click again
             square.textContent = turn;
             square.classList.add("clicked");
 
+            // Converts squares to a list
             let currentBoard = squaresToList(squares);
+            // Finds where we are in the tree 
             for (let child of currentNode.getChildren()) {
                 if (JSON.stringify(currentBoard) == JSON.stringify(child.getValue())) {
                     currentNode = child;
                     break;
                 }
-            }         
+            }
+            
+            // See if the game is over
             checkGameOver(currentNode, gameOverBoard, mainHeader);
             gameOverBoard.style.display = "block";
+
+            // User makes a decision
             if (currentNode.getGameOverVal() === null){
                 setTimeout(() => {
                     currentNode = gameDecide(currentNode, gameOverBoard);
