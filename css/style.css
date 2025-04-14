@@ -1,3 +1,7 @@
+:root{
+    --board-size: 60vh;
+}
+
 *{
     box-sizing: border-box;
     margin: 0;
@@ -128,11 +132,28 @@ body{
 }
 
 @media (max-width: 767px){
+
+    .board{
+        background-color: rgba(0, 0, 0, 0.397);
+        width: 50vh;
+        height: 50vh;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 3%;
+        padding: .7rem;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+    }
+
     #reset_button{
         position: absolute;
-        top: 485px;
+        top: 350px;
         left: 0px;
-        width: 60vh;
+        width: 50vh;
         background: white;
         padding: .6rem;
         font-size: 1rem;
